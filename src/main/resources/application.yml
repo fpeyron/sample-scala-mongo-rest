@@ -1,0 +1,9 @@
+server:
+  port: 8080
+  servletPath: /
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://192.168.99.100:27017
+      database: hoteldatabase
