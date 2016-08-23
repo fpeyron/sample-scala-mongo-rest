@@ -1,4 +1,11 @@
+
+logging:
+  level:
+    org.springframework: WARN
+
 spring:
   data:
     mongodb:
      database: hoteldatabaseTest
+
+
