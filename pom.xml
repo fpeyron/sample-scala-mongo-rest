@@ -67,6 +67,7 @@
 
     <build>
         <defaultGoal>install</defaultGoal>
+        <finalName>${project.artifactId}</finalName>
         <sourceDirectory>src/main/scala</sourceDirectory>
         <testSourceDirectory>src/test/scala</testSourceDirectory>
 
@@ -96,23 +97,25 @@
                 </configuration>
             </plugin>
 
+            <!-- Plugin to deploy in Docker repository -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.1</version>
+                <configuration>
+                    <imageName>florentpeyron/${project.artifactId}</imageName>
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <serverId>docker-hub</serverId>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <!--
-    <dependencyManagement>
-        <dependencies>
-         Import dependency management from Spring Boot
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
--->
 
 </project>
