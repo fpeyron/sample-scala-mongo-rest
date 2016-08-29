@@ -9,7 +9,7 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration
 import org.springframework.data.rest.webmvc.config.{RepositoryRestConfigurer, RepositoryRestConfigurerAdapter}
 
 object Application extends App {
-  SpringApplication.run(classOf[ApplicationConfig]);
+  SpringApplication.run(classOf[ApplicationConfig])
 }
 
 @EnableAutoConfiguration

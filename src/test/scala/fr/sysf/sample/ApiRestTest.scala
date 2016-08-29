@@ -36,6 +36,9 @@ class ApiRestTest {
     hotel.setZip("75010")
     hotel.setAddress("my address")
     val response1 = restTemplate.postForEntity("/hotels", hotel, classOf[Hotel])
+    Assertions.assertThat(response1.getStatusCodeValue).isEqualTo(HttpStatus.CREATED.value())
+    Assertions.assertThat(response.getBody.getContent).isEmpty
+
 
     // getAll after insert
     val response2 = restTemplate.getForEntity("/hotels", classOf[hateoas.Resources[Hotel]])
