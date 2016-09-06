@@ -3,6 +3,7 @@ package fr.sysf.sample
 import fr.sysf.sample.domain.Hotel
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient
 import org.springframework.context.annotation.{Bean, ComponentScan, Configuration}
 import org.springframework.data.mongodb.config.EnableMongoAuditing
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration
@@ -14,6 +15,7 @@ object Application extends App {
 
 @EnableAutoConfiguration
 @ComponentScan
+@EnableEurekaClient
 @EnableMongoAuditing
 class ApplicationConfig
 
