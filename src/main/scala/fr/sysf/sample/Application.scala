@@ -28,4 +28,7 @@ class RestMvcConfig {
     }
   }
 
+  @Bean
+  def validator() = new org.springframework.validation.beanvalidation.LocalValidatorFactoryBean()
+
 }
