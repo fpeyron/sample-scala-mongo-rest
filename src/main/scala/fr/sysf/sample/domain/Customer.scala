@@ -22,8 +22,8 @@ class Customer {
   @BeanProperty var customerId: String = _
 
   @NotNull
-  @Size(min = 2)
-  @BeanProperty var CountryCode: String = _
+  @Size(min = 2, max = 5)
+  @BeanProperty var countryCode: String = _
 
   @BeanProperty var languageCode: String = _
 

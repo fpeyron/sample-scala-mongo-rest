@@ -7,6 +7,9 @@ import org.springframework.context.annotation.{Bean, ComponentScan, Configuratio
 import org.springframework.data.mongodb.config.EnableMongoAuditing
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration
 import org.springframework.data.rest.webmvc.config.{RepositoryRestConfigurer, RepositoryRestConfigurerAdapter}
+import org.springframework.validation.Validator
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 object Application extends App {
   SpringApplication.run(classOf[ApplicationConfig])
@@ -19,7 +22,7 @@ class ApplicationConfig
 
 
 @Configuration
-class RestMvcConfig {
+class RestMvcConfig extends WebMvcConfigurerAdapter{
 
   @Bean
   def repositoryRestConfigurer(): RepositoryRestConfigurer = new RepositoryRestConfigurerAdapter() {
@@ -29,6 +32,11 @@ class RestMvcConfig {
   }
 
   @Bean
-  def validator() = new org.springframework.validation.beanvalidation.LocalValidatorFactoryBean()
+  def validator(): LocalValidatorFactoryBean = {
+    new LocalValidatorFactoryBean()
+  }
 
+  override def getValidator: Validator = {
+    validator()
+  }
 }
