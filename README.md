@@ -37,3 +37,13 @@ To push only specific tags of the image to the registry, specify the pushImageTa
 To create instance on docker machine (need environment variables)
 
     docker create  --name sample-scala-mongo-rest -t -p 8080:8080 florentpeyron/sample-scala-mongo-rest
+
+    docker create  --name sample-scala-mongo-rest1 -t -p 8081:8080 \
+        -e INSTANCE_HOST='192.168.99.100' \
+        -e INSTANCE_PORT='8081' \
+    florentpeyron/sample-scala-mongo-rest
+
+    docker create  --name sample-scala-mongo-rest2 -t -p 8082:8080 \
+            -e INSTANCE_HOST='192.168.99.100' \
+            -e INSTANCE_PORT='8082' \
+        florentpeyron/sample-scala-mongo-rest
