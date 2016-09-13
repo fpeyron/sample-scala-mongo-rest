@@ -4,9 +4,14 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include
 import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper, SerializationFeature}
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.google.common.base.{Predicate, Predicates}
+import com.mongodb.MongoClientOptions
+import com.mongodb.MongoClientOptions.Builder
+import fr.sysf.sample.config.MongoOptionProperties
 import fr.sysf.sample.domain.Customer
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.{Bean, ComponentScan, Configuration}
 import org.springframework.data.mongodb.config.EnableMongoAuditing
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration
@@ -47,11 +52,11 @@ class RestMvcConfig extends WebMvcConfigurerAdapter {
     val converter = new MappingJackson2HttpMessageConverter()
     converter.setObjectMapper(
       new ObjectMapper()
-        .registerModule(new JavaTimeModule())
-        .setSerializationInclusion(Include.NON_EMPTY)
-        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        .findAndRegisterModules())
+          .registerModule(new JavaTimeModule())
+          .setSerializationInclusion(Include.NON_EMPTY)
+          .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+          .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+          .findAndRegisterModules())
     converters.add(converter)
   }
 
@@ -76,7 +81,7 @@ class RestMvcConfig extends WebMvcConfigurerAdapter {
         .build()
   }
 
-  private def paths():Predicate[String] = {
+  private def paths(): Predicate[String] = {
     Predicates.or(
       regex("/customers.*")
     )
@@ -92,4 +97,32 @@ class RestMvcConfig extends WebMvcConfigurerAdapter {
     new LocalValidatorFactoryBean()
   }
 
+}
+
+@Configuration
+@EnableConfigurationProperties(Array(classOf[MongoOptionProperties]))
+class MongoDbConfig {
+
+  @Autowired
+  private val mongoOptionProperties: MongoOptionProperties = null
+
+  @Bean
+  def mongoClientOptions(): MongoClientOptions = {
+    val builder: Builder = MongoClientOptions.builder()
+
+    if (mongoOptionProperties.connectionsPerHost > 0) {
+      builder.connectionsPerHost(mongoOptionProperties.connectionsPerHost)
+    }
+    if (mongoOptionProperties.threadsAllowedToBlockForConnectionMultiplier > 0) {
+      builder.threadsAllowedToBlockForConnectionMultiplier(mongoOptionProperties.threadsAllowedToBlockForConnectionMultiplier)
+    }
+    if (mongoOptionProperties.connectTimeout > 0) {
+      builder.connectTimeout(mongoOptionProperties.connectTimeout)
+    }
+    if (mongoOptionProperties.socketTimeout > 0) {
+      builder.socketTimeout(mongoOptionProperties.socketTimeout)
+    }
+
+    builder.build()
+  }
 }
