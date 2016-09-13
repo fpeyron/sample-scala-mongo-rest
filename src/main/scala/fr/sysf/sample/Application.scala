@@ -1,10 +1,10 @@
 package fr.sysf.sample
 
-import com.google.common.base.{Predicate, Predicates}
-import fr.sysf.sample.domain.Customer
 import com.fasterxml.jackson.annotation.JsonInclude.Include
 import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper, SerializationFeature}
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.google.common.base.{Predicate, Predicates}
+import fr.sysf.sample.domain.Customer
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.context.annotation.{Bean, ComponentScan, Configuration}
