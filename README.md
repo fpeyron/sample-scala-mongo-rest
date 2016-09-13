@@ -6,6 +6,11 @@ Sample application Spring-boot - data-rest - scala
 ## License
 This library is licensed under the Apache License, Version 2.0.
 
+## Swagger UI
+http://{url_project}/swagger-ui.html#/
+
+Example: http://localhost:8080/swagger-ui.html#/
+
 ## Starting
 
 
