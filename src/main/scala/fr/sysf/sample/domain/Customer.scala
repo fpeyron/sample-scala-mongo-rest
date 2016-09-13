@@ -27,6 +27,7 @@ class Customer {
 
   @BeanProperty var languageCode: String = _
 
+  @Indexed
   @Email
   @NotEmpty
   @BeanProperty var email: String = _

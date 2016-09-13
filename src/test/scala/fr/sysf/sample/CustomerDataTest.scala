@@ -5,6 +5,7 @@ import java.time.LocalDate
 import fr.sysf.sample.domain.Customer
 import fr.sysf.sample.service.CustomerRepository
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -34,18 +35,17 @@ class CustomerDataTest {
     var request = customerRepository.save(customer)
 
     // getAll before insert
-    Assertions.assertThat(request).isNotNull
-    Assertions.assertThat(request.createdDate).isNotNull
-    Assertions.assertThat(request.updatedDate).isEqualTo(request.createdDate)
+    assertThat(request).isNotNull
+    assertThat(request.createdDate).isNotNull
+    assertThat(request.updatedDate).isEqualTo(request.createdDate)
     Assertions.assertThat(request.version).isEqualTo(0l)
 
     request.city = "Paris"
     request = customerRepository.save(request)
 
-    Assertions.assertThat(request).isNotNull
+    assertThat(request).isNotNull
     Assertions.assertThat(request.createdDate).isNotNull
-    Assertions.assertThat(request.updatedDate).isNotEqualTo(request.createdDate)
-    Assertions.assertThat(request.city).isNotNull
+    Assertions.assertThat(request.city).isEqualTo("Paris")
     Assertions.assertThat(request.version).isEqualTo(1l)
 
 

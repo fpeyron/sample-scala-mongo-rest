@@ -6,4 +6,10 @@ import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-trait CustomerRepository extends MongoRepository[Customer, ObjectId]
+trait CustomerRepository extends MongoRepository[Customer, ObjectId] {
+
+  def findByCustomerId(customerId:String):Customer
+
+  def findByEmail(customerId:String):Customer
+
+}

@@ -7,15 +7,12 @@ import com.google.common.base.{Predicate, Predicates}
 import com.mongodb.MongoClientOptions
 import com.mongodb.MongoClientOptions.Builder
 import fr.sysf.sample.config.MongoOptionProperties
-import fr.sysf.sample.domain.Customer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.{Bean, ComponentScan, Configuration}
 import org.springframework.data.mongodb.config.EnableMongoAuditing
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration
-import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.validation.Validator
@@ -39,14 +36,6 @@ class ApplicationConfig
 
 @Configuration
 class RestMvcConfig extends WebMvcConfigurerAdapter {
-
-  @Bean
-  def repositoryRestConfigurer() = new RepositoryRestConfigurerAdapter() {
-    override def configureRepositoryRestConfiguration(config: RepositoryRestConfiguration) {
-      config.exposeIdsFor(classOf[Customer])
-    }
-  }
-
 
   override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {
     val converter = new MappingJackson2HttpMessageConverter()

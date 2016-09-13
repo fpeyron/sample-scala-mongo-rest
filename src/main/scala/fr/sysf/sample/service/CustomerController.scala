@@ -28,11 +28,21 @@ class CustomerController {
     new ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "Not found"),
     new ApiResponse(code = HttpURLConnection.HTTP_ACCEPTED, response = classOf[Customer], message = "Success PUT")
   ))
-  @RequestMapping(value = Array("/"), method = Array(RequestMethod.PUT, RequestMethod.POST, RequestMethod.PATCH), produces = Array(MediaType.APPLICATION_JSON_UTF8_VALUE))
+  @RequestMapping(
+    value = Array("/"),
+    method = Array(RequestMethod.PUT, RequestMethod.POST, RequestMethod.PATCH),
+    produces = Array(MediaType.APPLICATION_JSON_UTF8_VALUE))
   def setCustomer(
                      @Valid @RequestBody customer: Customer
                  ): ResponseEntity[Customer] = {
-    new ResponseEntity[Customer](customer, HttpStatus.ACCEPTED)
+
+    val customerExisted: Customer = customerRepository.findByEmail(customer.email)
+    if (customerExisted != null) {
+      customer.id = customerExisted.id
+      customer.version = customerExisted.version
+    }
+    val customerSaved: Customer = customerRepository.save(customer)
+    new ResponseEntity[Customer](customerSaved, HttpStatus.ACCEPTED)
   }
 
 }
