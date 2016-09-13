@@ -73,11 +73,8 @@ class Customer {
   @LastModifiedDate
   @BeanProperty var updatedDate: Instant = _
 
+  @JsonIgnore
   @Version
   @BeanProperty var version: Long = _
-
-  @BeanProperty
-  @NotEmpty
-  var zip: String = _
 
 }

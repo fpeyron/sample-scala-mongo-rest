@@ -33,15 +33,16 @@ class CustomerController {
     method = Array(RequestMethod.PUT, RequestMethod.POST, RequestMethod.PATCH),
     produces = Array(MediaType.APPLICATION_JSON_UTF8_VALUE))
   def setCustomer(
-                     @Valid @RequestBody customer: Customer
+                   @Valid @RequestBody customer: Customer
                  ): ResponseEntity[Customer] = {
 
-    val customerExisted: Customer = customerRepository.findByEmail(customer.email)
+    val customerExisted = customerRepository.findByEmail(customer.email)
     if (customerExisted != null) {
       customer.id = customerExisted.id
       customer.version = customerExisted.version
     }
-    val customerSaved: Customer = customerRepository.save(customer)
+    val customerSaved = customerRepository.save(customer)
+
     new ResponseEntity[Customer](customerSaved, HttpStatus.ACCEPTED)
   }
 
